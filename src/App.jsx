@@ -1,51 +1,67 @@
-import { useState } from "react"
+import { useState } from 'react'
+import './styles.css'
 
 const api = {
-  key: `1a8e55094ddb797a0718c407c2c9dbc3`,
+  key: `b7dea0749e34131fab7f854992d8b946`,
   base: `https://api.openweathermap.org/data/2.5/`
 }
 
-export default function App () {
+export default function App() {
 
-    const [search, setSearch] = useState('');
-    const [weather, setWeather] = useState({})
+  const [search, setSearch] = useState('')
+  const [weather, setWeather] = useState([])
 
-    const searchPressed = () =>{
-      fetch(`${api.base}weather?q=${search}&units=imperial&APPID=${api.key}`)
-      .then(response => response.json())
-      .then(result => {setWeather(result)})
-      
-    }
+  const searchPressed = () => {
+    fetch(`${api.base}weather?q=${search}&units=imperial&APPID=${api.key}`)
+    .then(response=>response.json())
+    .then(result=>{setWeather(result)})
+  }
 
-  return (
-    <div className="app">
-      <header className="app-header">
-        <h1>Weather App</h1>
-          <div>
-            <input 
-              type="text" 
-              placeholder="Enter City Here"
-              onChange={(e) => setSearch(e.target.value)}
-              />
-              <button onClick={searchPressed}>Search</button>
-          </div>
-
-        {typeof weather.main != 'undefined' ? (
-          <div>
+  return(
+    <>
+      <div className="weather-container">
+        <div className="header">
+          <h1>Local Weather</h1>
+        </div>
+        <div className="search-field">
+          <input type="text" 
+          placeholder="Enter City Here"
+          onChange={(e)=>setSearch(e.target.value)}
+          onKeyDown={(e)=>{
+            if(e.key === `Enter`){
+              searchPressed()
+            }
+          }}
+          />
+          <button onClick={searchPressed}>Search</button>
+        </div>
+          {typeof weather.main != 'undefined' ? ( <div className="city">
             <p>{weather.name}</p>
-            <p>{weather.main.temp}</p>
-            <p>{weather.weather[0].main}</p>
-            <p>({weather.weather[0].description})</p>
-          </div>
-          ) : (
-            ''
-          )}
-        
-        
-        
-      </header>
-    </div>
+          </div> ) : ('')}
+          {typeof weather.main != 'undefined' ? (<div className="conditions">
+            <div className="temp">
+              <p>{Math.round(weather.main.temp)}°F</p>
+            </div>
+            <div className="humid">
+              <p>Humid</p>
+              <p>{weather.main.humidity}</p>
+            </div>
+            <div className="wind">
+              <p>Wind Speed</p>
+              <p>{weather.wind.speed} mph</p>
+            </div>
+            <div className="clouds">
+              <p>Cloud Coverage</p>
+              <p>{weather.clouds.all}%</p>
+            </div>
+            <div className="feels">
+              <p>Feels Like</p>
+              <p>{Math.round(weather.main.feels_like)}</p>
+            </div>
+            </div> ) : ('')}
+      </div>
+    </>
   )
 }
 
- 
+
