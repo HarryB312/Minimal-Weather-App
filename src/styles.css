@@ -5,6 +5,8 @@ body{
 .weather-container{
   width: fit-content;
   border-style: groove;
+  background: Linear-gradient(to right,#fbfba3, #75ede3);
+  height: 430.875px;
 }
 
 .temp{
@@ -18,3 +20,4 @@ font-size: 30px;
   display: flex;
   justify-content: space-between;
 }
+

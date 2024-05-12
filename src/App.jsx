@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './styles.css'
 
+
 const api = {
   key: `b7dea0749e34131fab7f854992d8b946`,
   base: `https://api.openweathermap.org/data/2.5/`
@@ -43,7 +44,7 @@ export default function App() {
               <p>{Math.round(weather.main.temp)}°F</p>
             </div>
             <div className="humid">
-              <p>Humid</p>
+              <p>Humid </p>
               <p>{weather.main.humidity}</p>
             </div>
             <div className="wind">
